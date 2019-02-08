@@ -10,32 +10,25 @@ public class Rover {
     public static final int S = 3;
     public static final int W = 4;
 
-    public int direction = N;
+    public int facing = N;
 
     public Rover() {
 
     }
 
-    public void setPosition(int x, int y, int direction) {
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
-
-        System.out.println("Rover position set to x: " + x + " y: " + y + " facing: " + direction);
-    }
 
     public void setPosition(int x, int y, Character direction) {
         this.x = x;
         this.y = y;
 
         if(direction.equals('N')) {
-            this.direction = N;
+            this.facing = N;
         } else if (direction.equals('E')) {
-            this.direction = E;
+            this.facing = E;
         } else if(direction.equals('S')) {
-            this.direction = S;
+            this.facing = S;
         } else if(direction.equals('W')) {
-            this.direction = W;
+            this.facing = W;
         } else {
             throw new IllegalArgumentException("Invalid direction");
         }
@@ -45,7 +38,7 @@ public class Rover {
     public void printPosition() {
         char dir = 'N';
 
-        switch (direction) {
+        switch (facing) {
             case 1:
                 dir = 'N';
                 break;
@@ -59,7 +52,7 @@ public class Rover {
                 dir = 'W';
         }
 
-        System.out.print("x: " + x + " y: " + y + " facing: " + dir);
+        System.out.print("Rover moved to x: " + x + " y: " + y + " facing: " + dir);
     }
 
     public void move(String commands) {
@@ -67,7 +60,7 @@ public class Rover {
             process(commands.charAt(i));
         }
 
-        System.out.print("Rover moved to x: " + x + " y: " + y + " facing: " + direction);
+        printPosition();
     }
 
     public void process(Character command) {
@@ -85,28 +78,36 @@ public class Rover {
     }
 
     public void moveForward() {
-        if (this.direction == N) {
+        if (this.facing == N) {
             this.y++;
-        } else if (this.direction == S) {
+        } else if (this.facing == S) {
             this.y--;
+        } else if (this.facing == E) {
+            this.x++;
+        } else if (this.facing == W) {
+            this.x--;
         }
     }
 
     public void moveBackward() {
-        if(this.direction == S) {
+        if(this.facing == S) {
             this.y--;
-        } else if (this.direction == N) {
+        } else if (this.facing == N) {
             this.y++;
+        } else if (this.facing == E) {
+            this.x--;
+        } else if (this.facing == W) {
+            this.x++;
         }
 
     }
 
     public void turnLeft() {
-        this.direction = ((direction - 1) < N) ? W : direction - 1;
+        this.facing = ((facing - 1) < N) ? W : facing - 1;
     }
 
     public void turnRight() {
-        this.direction = ((direction - 1) < W) ? N : direction - 1;
+        this.facing = ((facing - 1) < W) ? N : facing - 1;
     }
 
 
